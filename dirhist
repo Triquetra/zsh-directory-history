@@ -57,15 +57,8 @@ def get_commands_in_directory(directory):
       for line in f.readlines():
         try:
           directory_in_history, command = get_dir_and_command(line.strip())
-        except ValueError:
+        except (ValueError, IndexError):
           continue
-        except IndexError:
-          # User still uses format from version 1.0
-          try:
-            directory_in_history, command = get_dir_and_command_previous_version(
-                line.strip())
-          except ValueError:
-            continue
 
         if directory_in_history != directory and (
             len(commands_not_dir) + len(commands_dir)) < HISTSIZE:
@@ -109,8 +102,9 @@ if len(sys.argv) == 4 and (sys.argv[1] == "-a" or sys.argv[1] == "--all") and (
 
 # Return list of indizes which match a given substring
 # dirhist -s/--substring SUBSTRING -d DIRECTORY
-if len(sys.argv) == 5 and (sys.argv[1] == "-s" or sys.argv[1] ==
-                           "--substring") and sys.argv[3] == "-d":
+if len(sys.argv) == 5 and (
+    sys.argv[1] == "-s" or
+    sys.argv[1] == "--substring") and sys.argv[3] == "-d":
   directory = sys.argv[4]
   substring = sys.argv[2]
 

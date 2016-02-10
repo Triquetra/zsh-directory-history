@@ -2,7 +2,6 @@
 import sys
 import os
 from collections import OrderedDict
-from os.path import expanduser
 
 # Size of the history
 HISTSIZE = 10000
@@ -11,7 +10,7 @@ HISTSIZE = 10000
 HISTFILE = ".directory_history"
 
 # Home directory of user
-home = expanduser("~")
+home = os.getenv("ZDOTDIR", os.getenv("HOME"))
 
 
 def get_dir_and_command(line):

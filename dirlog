@@ -9,7 +9,7 @@ if len(sys.argv) != 3:
 
 command = sys.argv[1]
 directory = sys.argv[2]
-home = expanduser("~")
+home = os.getenv("ZDOTDIR", os.getenv("HOME"))
 timestamp = int(time.time())
 
 with open(home + "/.directory_history", "a") as f:
